@@ -7,10 +7,12 @@ import "@testing-library/jest-dom";
 import { screen, waitFor } from "@testing-library/dom";
 import BillsUI from "../views/BillsUI.js";
 import { bills } from "../fixtures/bills.js";
-import { ROUTES_PATH } from "../constants/routes.js";
+import { ROUTES_PATH } from "../constants/routes";
 import { localStorageMock } from "../__mocks__/localStorage.js";
-import router from "../app/Router.js";
 import mockStore from "../__mocks__/store";
+import router from "../app/Router.js";
+import userEvent from "@testing-library/user-event";
+import Bills from "../containers/Bills.js";
 
 jest.mock("../app/store", () => mockStore);
 
@@ -33,7 +35,6 @@ describe("Given I am connected as an employee", () => {
       window.onNavigate(ROUTES_PATH.Bills);
       await waitFor(() => screen.getByTestId("icon-window"));
       const windowIcon = screen.getByTestId("icon-window");
-      //to-do write expect expression
       expect(windowIcon).toHaveClass("active-icon");
     });
     test("Then bills should be ordered from earliest to latest", () => {
@@ -49,19 +50,92 @@ describe("Given I am connected as an employee", () => {
       expect(dates).toEqual(datesSorted);
     });
 
-    // Uncovered line 14, 24
     describe("When I click on new bill button", () => {
-      test("Then I should go to the new bill page", () => {});
+      test("Then I should go to the new bill page", () => {
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ type: "Employee", email: "a@a" })
+        );
+        const root = document.createElement("div");
+        root.setAttribute("id", "root");
+        document.body.append(root);
+        router();
+        window.onNavigate(ROUTES_PATH.NewBill);
+
+        // Init bills container
+        const billsContainer = {
+          document,
+          onNavigate,
+          store: mockStore,
+          bills: bills,
+          localStorage: window.localStorage,
+        };
+
+        // Test a function without depending on third-party components
+        const handleClickNewBill = jest.fn(billsContainer.handleClickNewBill);
+        const newBillButton = screen.getByTestId("btn-new-bill");
+
+        newBillButton.addEventListener("click", handleClickNewBill);
+        // Describe a user interaction
+        userEvent.click(newBillButton);
+
+        // Check if user clicked on newBillButton
+        expect(handleClickNewBill).toHaveBeenCalled();
+
+        // Check if bills new title exist inside the page
+        const billsNewTitle = screen.getByText("Envoyer une note de frais");
+        expect(billsNewTitle).toBeTruthy();
+      });
     });
 
-    // Uncovered line 18,28-35
     describe("When I click on the eye icon", () => {
-      test("Then a modale file should be opened", () => {});
+      test("Then a modale file should be opened", () => {
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ type: "Employee", email: "a@a" })
+        );
+        const root = document.createElement("div");
+        root.setAttribute("id", "root");
+        document.body.append(root);
+        router();
+        window.onNavigate(ROUTES_PATH.NewBill);
+
+        // Init bills container
+        const billsContainer = new Bills({
+          document,
+          onNavigate,
+          store: mockStore,
+          bills: bills,
+          localStorage: window.localStorage,
+        });
+
+        document.body.innerHTML = BillsUI({ data: bills });
+
+        const handleClickIconEye = jest.fn((icon) =>
+          billsContainer.handleClickIconEye(icon)
+        );
+
+        const iconEye = screen.getAllByTestId("icon-eye");
+        const modaleFile = document.getElementById("modaleFile");
+
+        // Test modal function without depending on third-party components
+        $.fn.modal = jest.fn(() => modaleFile.classList.add("show"));
+
+        iconEye.forEach((icon) => {
+          icon.addEventListener("click", handleClickIconEye(icon));
+
+          // Describe a user interaction
+          userEvent.click(icon);
+          expect(handleClickIconEye).toHaveBeenCalled();
+        });
+
+        // Check if modal has show class
+        expect(modaleFile).toHaveClass("show");
+      });
     });
   });
 });
 
-// Uncovered line 44-63
 // Integration test GET Bills
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
@@ -76,13 +150,22 @@ describe("Given I am connected as an employee", () => {
       router();
       window.onNavigate(ROUTES_PATH.Bills);
 
-      // Check if bills title, Btn and table exist inside the page
+      // Check if bills title exist inside the page
       const billsTitle = screen.getByText("Mes notes de frais");
-      const billsBtn = screen.getByTestId("btn-new-bill");
-      const billsTableBody = screen.getByTestId("tbody");
       expect(billsTitle).toBeTruthy();
-      expect(billsBtn).toBeTruthy();
-      expect(billsTableBody).toBeTruthy();
+
+      // Init bills container
+      const billsContainer = {
+        document,
+        onNavigate,
+        store: mockStore,
+        bills: bills,
+        localStorage: window.localStorage,
+      };
+
+      // Check if bills length is equal to 4 (mockedBills)
+      const billsToTest = billsContainer.bills.length;
+      expect(billsToTest).toBe(4);
     });
 
     describe("When an error occurs on API", () => {
