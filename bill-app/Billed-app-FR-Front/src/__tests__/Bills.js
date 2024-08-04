@@ -60,7 +60,7 @@ describe("Given I am connected as an employee", () => {
         root.setAttribute("id", "root");
         document.body.append(root);
         router();
-        window.onNavigate(ROUTES_PATH.NewBill);
+        window.onNavigate(ROUTES_PATH.Bills);
 
         // Init bills container
         const billsContainer = {
@@ -98,7 +98,7 @@ describe("Given I am connected as an employee", () => {
         root.setAttribute("id", "root");
         document.body.append(root);
         router();
-        window.onNavigate(ROUTES_PATH.NewBill);
+        window.onNavigate(ROUTES_PATH.Bills);
 
         // Init bills container
         const billsContainer = new Bills({

@@ -77,6 +77,8 @@ export default class NewBill {
         spanErrorMessage.textContent =
           "You can only upload jpeg, jpg or png files";
         fileInput.after(spanErrorMessage);
+        const file = document.querySelector(`input[data-testid="file"]`);
+        file.classList.add("error-message");
         return false;
       }
     };
