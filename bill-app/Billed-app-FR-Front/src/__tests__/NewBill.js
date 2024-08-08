@@ -71,6 +71,7 @@ describe("Given I am connected as an employee", () => {
       userEvent.upload(billFile, file);
 
       expect(billFile.files[0].name).toBeDefined();
+      expect(billFile.files[0].type).toBe("image/png");
       expect(handleChangeFile).toBeCalled();
     });
 
