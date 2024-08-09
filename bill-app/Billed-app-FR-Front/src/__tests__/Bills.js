@@ -129,8 +129,10 @@ describe("Given I am connected as an employee", () => {
           expect(handleClickIconEye).toHaveBeenCalled();
         });
 
-        // Check if modal has show class
+        // Check if modal has show class and contain an img
         expect(modaleFile).toHaveClass("show");
+        const imgTest = document.querySelector(".bill-proof-container");
+        expect(imgTest).toContainHTML("img");
       });
     });
   });

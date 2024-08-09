@@ -4,7 +4,7 @@
 
 // Allow to use matchers
 import "@testing-library/jest-dom";
-import { screen, fireEvent } from "@testing-library/dom";
+import { screen, fireEvent, waitFor } from "@testing-library/dom";
 import BillsUI from "../views/BillsUI.js";
 import { bills } from "../fixtures/bills.js";
 import NewBillUI from "../views/NewBillUI.js";
@@ -24,6 +24,7 @@ describe("Given I am connected as an employee", () => {
         "user",
         JSON.stringify({ type: "Employee", email: "a@a" })
       );
+      1;
       const root = document.createElement("div");
       root.setAttribute("id", "root");
       document.body.append(root);
@@ -38,7 +39,7 @@ describe("Given I am connected as an employee", () => {
       expect(newBillsTitle).toBeTruthy();
     });
 
-    test("Verify bill file is jpg or png only", () => {
+    test("Verify bill file is png only", () => {
       localStorage.setItem(
         "user",
         JSON.stringify({ type: "Employee", email: "a@a" })
@@ -73,6 +74,61 @@ describe("Given I am connected as an employee", () => {
       expect(billFile.files[0].name).toBeDefined();
       expect(billFile.files[0].type).toBe("image/png");
       expect(handleChangeFile).toBeCalled();
+
+      // Check if error-message class is not apply
+      const inputFile = screen.getByTestId("file");
+      inputFile.addEventListener("click", handleChangeFile);
+      // Describe a user interaction
+      userEvent.click(inputFile);
+
+      expect(handleChangeFile).toHaveBeenCalled();
+      expect(inputFile).not.toHaveClass("error-message");
+    });
+
+    test("Verify bill file is jpg only", () => {
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ type: "Employee", email: "a@a" })
+      );
+      const root = document.createElement("div");
+      root.setAttribute("id", "root");
+      document.body.append(root);
+      router();
+      window.onNavigate(ROUTES_PATH.NewBill);
+
+      const html = NewBillUI();
+      document.body.innerHTML = html;
+
+      // Init new bills container
+      const newBillContainer = new NewBill({
+        document,
+        onNavigate,
+        store: mockStore,
+        localStorage: window.localStorage,
+      });
+
+      const file = new File(["image"], "image.jpg", { type: "image/jpg" });
+      const handleChangeFile = jest.fn((e) =>
+        newBillContainer.handleChangeFile(e)
+      );
+      const billFile = screen.getByTestId("file");
+
+      // Check if user upload file
+      billFile.addEventListener("change", handleChangeFile);
+      userEvent.upload(billFile, file);
+
+      expect(billFile.files[0].name).toBeDefined();
+      expect(billFile.files[0].type).toBe("image/jpg");
+      expect(handleChangeFile).toBeCalled();
+
+      // Check if error-message class is not apply
+      const inputFile = screen.getByTestId("file");
+      inputFile.addEventListener("click", handleChangeFile);
+      // Describe a user interaction
+      userEvent.click(inputFile);
+
+      expect(handleChangeFile).toHaveBeenCalled();
+      expect(inputFile).not.toHaveClass("error-message");
     });
 
     test("bill is not png or jpg files and display error message", () => {
@@ -118,7 +174,7 @@ describe("Given I am connected as an employee", () => {
       // Describe a user interaction
       userEvent.click(file);
 
-      // Check of error message is displayed (not jpg or png)
+      // Check if error message is displayed (not jpg or png)
       expect(handleChangeFile).toHaveBeenCalled();
       expect(file).toHaveClass("error-message");
       expect(newBillContainer.fileName).toBe("");
@@ -164,60 +220,6 @@ describe("Given I am connected as an employee", () => {
   });
 });
 
-//     test("bill file is a png or a jpg then the file name should be displayed into the input", () => {
-//       localStorage.setItem(
-//         "user",
-//         JSON.stringify({ type: "Employee", email: "a@a" })
-//       );
-//       const root = document.createElement("div");
-//       root.setAttribute("id", "root");
-//       document.body.append(root);
-//       router();
-//       window.onNavigate(ROUTES_PATH.NewBill);
-
-//       const html = NewBillUI();
-//       document.body.innerHTML = html;
-
-//       // Init new bills container
-//       const newBillContainer = new NewBill({
-//         document,
-//         onNavigate,
-//         store: mockStore,
-//         localStorage: window.localStorage,
-//       });
-
-//       const handleChangeFile = jest.fn(newBillContainer.handleChangeFile);
-//       const uploadFileBtn = screen.getByTestId("file");
-
-//       uploadFileBtn.addEventListener("change", handleChangeFile);
-
-//       const file = screen.getByTestId("file");
-
-//       file.addEventListener("change", handleChangeFile);
-//       fireEvent.change(file, {
-//         target: {
-//           files: [
-//             new File(
-//               ["file.png"],
-//               "file.png",
-//               { type: "file/png" },
-//               ["file.jpg"],
-//               "file.jpg",
-//               { type: "file/jpg" }
-//             ),
-//           ],
-//         },
-//       });
-
-//       file.addEventListener("click", handleChangeFile);
-//       // Describe a user interaction
-//       userEvent.click(file);
-
-//       expect(handleChangeFile).toHaveBeenCalled();
-//       expect(file).not.toHaveClass("error-message");
-//     });
-//   });
-
 // Integration test POST Bills
 describe("Given I am connected as an employee", () => {
   describe("When I am on NewBill Page", () => {
@@ -244,15 +246,12 @@ describe("Given I am connected as an employee", () => {
       test("call api update bills", async () => {
         // Form
         const newBillForm = screen.getByTestId("form-new-bill");
-        const onNavigate = (pathname) => {
-          document.body.innerHTML = ROUTES({ pathname });
-        };
 
-        // Init new bills container
+        // Init new bills containers
         const billContainer = {
           email: "employee@test.tld",
           type: "Transports",
-          name: "Vol Paris Londres",
+          name: "Vol Paris Marseille",
           date: "2024-08-08",
           amount: 300,
           vat: "50",
@@ -327,9 +326,22 @@ describe("Given I am connected as an employee", () => {
         fireEvent.submit(newBillForm);
         expect(handleSubmit).toHaveBeenCalled();
 
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ type: "Employee", email: "a@a" })
+        );
+        const root = document.createElement("div");
+        root.setAttribute("id", "root");
+        document.body.append(root);
+        router();
+
         // Check if New bills title exist inside the page
-        // const billsTitle = screen.getByText("Mes notes de frais");
-        // expect(billsTitle).toBeTruthy();
+        window.onNavigate(ROUTES_PATH.Bills);
+        await waitFor(() => screen.getByText("Mes notes de frais"));
+        // const newContent = screen.getByText("Vol Paris Marseille");
+        const tbody = screen.getByTestId("tbody");
+        // expect(newContent).toBeTruthy();
+        expect(tbody).toBeTruthy();
       });
     });
 
