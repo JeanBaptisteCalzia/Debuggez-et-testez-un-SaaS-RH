@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1724580926997" clover="3.2.0">
-  <project timestamp="1724580926998" name="All files">
-    <metrics statements="261" coveredstatements="207" conditionals="103" coveredconditionals="78" methods="71" coveredmethods="52" elements="435" coveredelements="337" complexity="0" loc="261" ncloc="261" packages="3" files="16" classes="16"/>
+<coverage generated="1725374078920" clover="3.2.0">
+  <project timestamp="1725374078920" name="All files">
+    <metrics statements="261" coveredstatements="216" conditionals="103" coveredconditionals="80" methods="71" coveredmethods="55" elements="435" coveredelements="351" complexity="0" loc="261" ncloc="261" packages="3" files="16" classes="16"/>
     <package name="constants">
       <metrics statements="8" coveredstatements="8" conditionals="5" coveredconditionals="5" methods="1" coveredmethods="1"/>
       <file name="routes.js" path="/Users/jb/Desktop/OpenClassrooms/Projets/P9/Debuggez-et-testez-un-SaaS-RH/bill-app/Billed-app-FR-Front/src/constants/routes.js">
         <metrics statements="8" coveredstatements="8" conditionals="5" coveredconditionals="5" methods="1" coveredmethods="1"/>
         <line num="6" count="6" type="stmt"/>
         <line num="13" count="6" type="stmt"/>
-        <line num="14" count="66" type="cond" truecount="5" falsecount="0"/>
+        <line num="14" count="71" type="cond" truecount="5" falsecount="0"/>
         <line num="16" count="20" type="stmt"/>
-        <line num="18" count="19" type="stmt"/>
-        <line num="20" count="14" type="stmt"/>
+        <line num="18" count="23" type="stmt"/>
+        <line num="20" count="15" type="stmt"/>
         <line num="22" count="12" type="stmt"/>
         <line num="24" count="1" type="stmt"/>
       </file>
@@ -20,37 +20,37 @@
       </file>
     </package>
     <package name="containers">
-      <metrics statements="223" coveredstatements="169" conditionals="62" coveredconditionals="37" methods="55" coveredmethods="36"/>
+      <metrics statements="223" coveredstatements="178" conditionals="62" coveredconditionals="39" methods="55" coveredmethods="39"/>
       <file name="Bills.js" path="/Users/jb/Desktop/OpenClassrooms/Projets/P9/Debuggez-et-testez-un-SaaS-RH/bill-app/Billed-app-FR-Front/src/containers/Bills.js">
         <metrics statements="28" coveredstatements="26" conditionals="6" coveredconditionals="4" methods="8" coveredmethods="7"/>
-        <line num="7" count="24" type="stmt"/>
-        <line num="8" count="24" type="stmt"/>
-        <line num="9" count="24" type="stmt"/>
-        <line num="10" count="24" type="stmt"/>
-        <line num="13" count="24" type="cond" truecount="2" falsecount="0"/>
-        <line num="14" count="20" type="stmt"/>
-        <line num="15" count="24" type="stmt"/>
-        <line num="16" count="24" type="cond" truecount="1" falsecount="1"/>
-        <line num="17" count="24" type="stmt"/>
+        <line num="7" count="33" type="stmt"/>
+        <line num="8" count="33" type="stmt"/>
+        <line num="9" count="33" type="stmt"/>
+        <line num="10" count="33" type="stmt"/>
+        <line num="13" count="33" type="cond" truecount="2" falsecount="0"/>
+        <line num="14" count="28" type="stmt"/>
+        <line num="15" count="33" type="stmt"/>
+        <line num="16" count="33" type="cond" truecount="1" falsecount="1"/>
+        <line num="17" count="33" type="stmt"/>
         <line num="18" count="104" type="stmt"/>
-        <line num="20" count="24" type="stmt"/>
-        <line num="23" count="24" type="stmt"/>
+        <line num="20" count="33" type="stmt"/>
+        <line num="23" count="33" type="stmt"/>
         <line num="24" count="2" type="stmt"/>
-        <line num="27" count="24" type="stmt"/>
+        <line num="27" count="33" type="stmt"/>
         <line num="28" count="4" type="stmt"/>
         <line num="29" count="4" type="stmt"/>
         <line num="30" count="4" type="stmt"/>
         <line num="35" count="4" type="stmt"/>
-        <line num="38" count="24" type="stmt"/>
-        <line num="39" count="13" type="cond" truecount="1" falsecount="1"/>
-        <line num="40" count="13" type="stmt"/>
-        <line num="44" count="10" type="stmt"/>
-        <line num="45" count="40" type="stmt"/>
-        <line num="46" count="40" type="stmt"/>
+        <line num="38" count="33" type="stmt"/>
+        <line num="39" count="18" type="cond" truecount="1" falsecount="1"/>
+        <line num="40" count="18" type="stmt"/>
+        <line num="44" count="15" type="stmt"/>
+        <line num="45" count="60" type="stmt"/>
+        <line num="46" count="60" type="stmt"/>
         <line num="54" count="0" type="stmt"/>
         <line num="55" count="0" type="stmt"/>
-        <line num="62" count="10" type="stmt"/>
-        <line num="63" count="10" type="stmt"/>
+        <line num="62" count="15" type="stmt"/>
+        <line num="63" count="15" type="stmt"/>
       </file>
       <file name="Dashboard.js" path="/Users/jb/Desktop/OpenClassrooms/Projets/P9/Debuggez-et-testez-un-SaaS-RH/bill-app/Billed-app-FR-Front/src/containers/Dashboard.js">
         <metrics statements="74" coveredstatements="69" conditionals="43" coveredconditionals="33" methods="24" coveredmethods="19"/>
@@ -175,28 +175,28 @@
       </file>
       <file name="Logout.js" path="/Users/jb/Desktop/OpenClassrooms/Projets/P9/Debuggez-et-testez-un-SaaS-RH/bill-app/Billed-app-FR-Front/src/containers/Logout.js">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="5" count="55" type="stmt"/>
-        <line num="6" count="55" type="stmt"/>
-        <line num="7" count="55" type="stmt"/>
-        <line num="8" count="55" type="stmt"/>
-        <line num="11" count="55" type="stmt"/>
+        <line num="5" count="66" type="stmt"/>
+        <line num="6" count="66" type="stmt"/>
+        <line num="7" count="66" type="stmt"/>
+        <line num="8" count="66" type="stmt"/>
+        <line num="11" count="66" type="stmt"/>
         <line num="12" count="2" type="stmt"/>
         <line num="13" count="2" type="stmt"/>
       </file>
       <file name="NewBill.js" path="/Users/jb/Desktop/OpenClassrooms/Projets/P9/Debuggez-et-testez-un-SaaS-RH/bill-app/Billed-app-FR-Front/src/containers/NewBill.js">
-        <metrics statements="73" coveredstatements="37" conditionals="9" coveredconditionals="0" methods="10" coveredmethods="3"/>
-        <line num="6" count="16" type="stmt"/>
-        <line num="7" count="16" type="stmt"/>
-        <line num="8" count="16" type="stmt"/>
-        <line num="9" count="16" type="stmt"/>
-        <line num="12" count="16" type="stmt"/>
-        <line num="13" count="16" type="stmt"/>
-        <line num="14" count="16" type="stmt"/>
-        <line num="15" count="16" type="stmt"/>
-        <line num="16" count="16" type="stmt"/>
-        <line num="17" count="16" type="stmt"/>
-        <line num="18" count="16" type="stmt"/>
-        <line num="20" count="16" type="stmt"/>
+        <metrics statements="73" coveredstatements="46" conditionals="9" coveredconditionals="2" methods="10" coveredmethods="6"/>
+        <line num="6" count="18" type="stmt"/>
+        <line num="7" count="18" type="stmt"/>
+        <line num="8" count="18" type="stmt"/>
+        <line num="9" count="18" type="stmt"/>
+        <line num="12" count="18" type="stmt"/>
+        <line num="13" count="18" type="stmt"/>
+        <line num="14" count="18" type="stmt"/>
+        <line num="15" count="18" type="stmt"/>
+        <line num="16" count="18" type="stmt"/>
+        <line num="17" count="18" type="stmt"/>
+        <line num="18" count="18" type="stmt"/>
+        <line num="20" count="18" type="stmt"/>
         <line num="21" count="8" type="stmt"/>
         <line num="22" count="8" type="stmt"/>
         <line num="24" count="8" type="stmt"/>
@@ -246,17 +246,17 @@
         <line num="107" count="8" type="stmt"/>
         <line num="108" count="8" type="stmt"/>
         <line num="110" count="0" type="stmt"/>
-        <line num="112" count="16" type="stmt"/>
-        <line num="113" count="0" type="stmt"/>
-        <line num="114" count="0" type="stmt"/>
-        <line num="118" count="0" type="stmt"/>
-        <line num="119" count="0" type="stmt"/>
-        <line num="137" count="0" type="stmt"/>
-        <line num="138" count="0" type="stmt"/>
-        <line num="142" count="16" type="stmt"/>
-        <line num="143" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="144" count="0" type="stmt"/>
-        <line num="148" count="0" type="stmt"/>
+        <line num="112" count="18" type="stmt"/>
+        <line num="113" count="2" type="stmt"/>
+        <line num="114" count="2" type="stmt"/>
+        <line num="118" count="2" type="stmt"/>
+        <line num="119" count="2" type="stmt"/>
+        <line num="137" count="2" type="stmt"/>
+        <line num="138" count="2" type="stmt"/>
+        <line num="142" count="18" type="stmt"/>
+        <line num="143" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="144" count="2" type="stmt"/>
+        <line num="148" count="2" type="stmt"/>
         <line num="150" count="0" type="stmt"/>
       </file>
     </package>
@@ -264,22 +264,22 @@
       <metrics statements="30" coveredstatements="30" conditionals="36" coveredconditionals="36" methods="15" coveredmethods="15"/>
       <file name="Actions.js" path="/Users/jb/Desktop/OpenClassrooms/Projets/P9/Debuggez-et-testez-un-SaaS-RH/bill-app/Billed-app-FR-Front/src/views/Actions.js">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="5" count="50" type="stmt"/>
+        <line num="5" count="66" type="stmt"/>
       </file>
       <file name="BillsUI.js" path="/Users/jb/Desktop/OpenClassrooms/Projets/P9/Debuggez-et-testez-un-SaaS-RH/bill-app/Billed-app-FR-Front/src/views/BillsUI.js">
         <metrics statements="12" coveredstatements="12" conditionals="14" coveredconditionals="14" methods="6" coveredmethods="6"/>
         <line num="7" count="6" type="stmt"/>
-        <line num="8" count="48" type="stmt"/>
+        <line num="8" count="64" type="stmt"/>
         <line num="22" count="6" type="stmt"/>
-        <line num="25" count="15" type="cond" truecount="4" falsecount="0"/>
-        <line num="26" count="69" type="cond" truecount="2" falsecount="0"/>
-        <line num="28" count="48" type="cond" truecount="4" falsecount="0"/>
-        <line num="32" count="33" type="stmt"/>
-        <line num="49" count="33" type="cond" truecount="2" falsecount="0"/>
-        <line num="50" count="13" type="stmt"/>
-        <line num="51" count="20" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="20" type="cond" truecount="4" falsecount="0"/>
+        <line num="26" count="93" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="64" type="cond" truecount="4" falsecount="0"/>
+        <line num="32" count="42" type="stmt"/>
+        <line num="49" count="42" type="cond" truecount="2" falsecount="0"/>
+        <line num="50" count="17" type="stmt"/>
+        <line num="51" count="25" type="cond" truecount="2" falsecount="0"/>
         <line num="52" count="5" type="stmt"/>
-        <line num="55" count="15" type="stmt"/>
+        <line num="55" count="20" type="stmt"/>
       </file>
       <file name="DashboardFormUI.js" path="/Users/jb/Desktop/OpenClassrooms/Projets/P9/Debuggez-et-testez-un-SaaS-RH/bill-app/Billed-app-FR-Front/src/views/DashboardFormUI.js">
         <metrics statements="2" coveredstatements="2" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
@@ -300,7 +300,7 @@
       </file>
       <file name="LoadingPage.js" path="/Users/jb/Desktop/OpenClassrooms/Projets/P9/Debuggez-et-testez-un-SaaS-RH/bill-app/Billed-app-FR-Front/src/views/LoadingPage.js">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="5" count="20" type="stmt"/>
+        <line num="5" count="24" type="stmt"/>
       </file>
       <file name="LoginUI.js" path="/Users/jb/Desktop/OpenClassrooms/Projets/P9/Debuggez-et-testez-un-SaaS-RH/bill-app/Billed-app-FR-Front/src/views/LoginUI.js">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
@@ -308,15 +308,15 @@
       </file>
       <file name="NewBillUI.js" path="/Users/jb/Desktop/OpenClassrooms/Projets/P9/Debuggez-et-testez-un-SaaS-RH/bill-app/Billed-app-FR-Front/src/views/NewBillUI.js">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="5" count="19" type="stmt"/>
+        <line num="5" count="21" type="stmt"/>
       </file>
       <file name="VerticalLayout.js" path="/Users/jb/Desktop/OpenClassrooms/Projets/P9/Debuggez-et-testez-un-SaaS-RH/bill-app/Billed-app-FR-Front/src/views/VerticalLayout.js">
         <metrics statements="6" coveredstatements="6" conditionals="6" coveredconditionals="6" methods="1" coveredmethods="1"/>
-        <line num="7" count="77" type="stmt"/>
-        <line num="8" count="77" type="cond" truecount="2" falsecount="0"/>
+        <line num="7" count="88" type="stmt"/>
+        <line num="8" count="88" type="cond" truecount="2" falsecount="0"/>
         <line num="9" count="48" type="stmt"/>
-        <line num="11" count="77" type="cond" truecount="4" falsecount="0"/>
-        <line num="12" count="49" type="stmt"/>
+        <line num="11" count="88" type="cond" truecount="4" falsecount="0"/>
+        <line num="12" count="60" type="stmt"/>
         <line num="29" count="28" type="stmt"/>
       </file>
     </package>

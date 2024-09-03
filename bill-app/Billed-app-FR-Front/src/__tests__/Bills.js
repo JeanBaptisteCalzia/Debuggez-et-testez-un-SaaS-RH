@@ -157,17 +157,16 @@ describe("Given I am connected as an employee", () => {
       expect(billsTitle).toBeTruthy();
 
       // Init bills container
-      const billsContainer = {
+      const billsContainer = new Bills({
         document,
         onNavigate,
         store: mockStore,
-        bills: bills,
         localStorage: window.localStorage,
-      };
+      });
 
       // Check if bills length is equal to 4 (mockedBills)
-      const billsToTest = billsContainer.bills.length;
-      expect(billsToTest).toBe(4);
+      const billsToTest = await billsContainer.getBills();
+      expect(billsToTest.length).toBe(4);
     });
 
     describe("When an error occurs on API", () => {

@@ -14,6 +14,7 @@ import { localStorageMock } from "../__mocks__/localStorage.js";
 import mockStore from "../__mocks__/store";
 import router from "../app/Router.js";
 import userEvent from "@testing-library/user-event";
+import Bills from "../containers/Bills.js";
 
 jest.mock("../app/store", () => mockStore);
 
@@ -131,7 +132,7 @@ describe("Given I am connected as an employee", () => {
       expect(inputFile).not.toHaveClass("error-message");
     });
 
-    test("bill is not png or jpg files and display error message", () => {
+    test("bill is not png or jpg files and display error message", async () => {
       localStorage.setItem(
         "user",
         JSON.stringify({ type: "Employee", email: "a@a" })
@@ -179,44 +180,6 @@ describe("Given I am connected as an employee", () => {
       expect(file).toHaveClass("error-message");
       expect(newBillContainer.fileName).toBe("");
     });
-
-    // test("Verify bill file is submit", () => {
-    //   localStorage.setItem(
-    //     "user",
-    //     JSON.stringify({ type: "Employee", email: "a@a" })
-    //   );
-
-    //   const root = document.createElement("div");
-    //   root.setAttribute("id", "root");
-    //   document.body.append(root);
-    //   router();
-    //   window.onNavigate(ROUTES_PATH.NewBill);
-
-    //   const html = NewBillUI();
-    //   document.body.innerHTML = html;
-
-    //   // Init new bills container
-    //   const newBillContainer = new NewBill({
-    //     document,
-    //     onNavigate,
-    //     store: mockStore,
-    //     localStorage: window.localStorage,
-    //   });
-
-    //   const formNewBill = screen.getByTestId("form-new-bill");
-    //   const handleSubmit = jest.fn((e) => newBillContainer.handleSubmit(e));
-
-    //   // Remplir le formulaire
-    //   // Ajouter aussi une note de frais dedans (fichier fictif comme precedemment)
-
-    //   // Check if user clicked on submit btn
-    //   formNewBill.addEventListener("submit", handleSubmit);
-    //   fireEvent.submit(formNewBill);
-    //   expect(handleSubmit).toHaveBeenCalled();
-
-    //   // Verifier qu'on a change de page (=>dashboard)
-    //   // Verifier si la note de frais qu' on vient d'ajouter apparait bien dans la liste
-    // });
   });
 });
 
@@ -244,6 +207,20 @@ describe("Given I am connected as an employee", () => {
 
     describe("user submit form", () => {
       test("call api update bills", async () => {
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ type: "Employee", email: "a@a" })
+        );
+        const root = document.createElement("div");
+        root.setAttribute("id", "root");
+        document.body.append(root);
+        router();
+        window.onNavigate(ROUTES_PATH.NewBill);
+
+        // DOM construction
+        const html = NewBillUI();
+        document.body.innerHTML = html;
+
         // Form
         const newBillForm = screen.getByTestId("form-new-bill");
 
@@ -321,27 +298,35 @@ describe("Given I am connected as an employee", () => {
         expect(fileField.files[0].type).toBe("image/png");
         expect(handleChangeFile).toHaveBeenCalled();
 
-        const handleSubmit = jest.fn(billContainer.handleSubmit);
+        // Init Newbill container
+        const newBillContainer = new NewBill({
+          document,
+          onNavigate,
+          store: mockStore,
+          localStorage: window.localStorage,
+        });
+
+        const handleSubmit = jest.fn(newBillContainer.handleSubmit);
         newBillForm.addEventListener("submit", handleSubmit);
         fireEvent.submit(newBillForm);
         expect(handleSubmit).toHaveBeenCalled();
 
-        localStorage.setItem(
-          "user",
-          JSON.stringify({ type: "Employee", email: "a@a" })
-        );
-        const root = document.createElement("div");
-        root.setAttribute("id", "root");
-        document.body.append(root);
-        router();
-
-        // Check if New bills title exist inside the page
         window.onNavigate(ROUTES_PATH.Bills);
-        await waitFor(() => screen.getByText("Mes notes de frais"));
-        // const newContent = screen.getByText("Vol Paris Marseille");
+
+        // DOM construction
+        document.body.innerHTML = BillsUI({ data: billContainer });
+
+        const BillsTitle = screen.getByText("Mes notes de frais");
+        expect(BillsTitle).toBeTruthy();
+
         const tbody = screen.getByTestId("tbody");
-        // expect(newContent).toBeTruthy();
         expect(tbody).toBeTruthy();
+
+        // const BillType = screen.getByText(billContainer.type);
+        // expect(BillType).toBeTruthy();
+
+        // const BillName = screen.getByText(billContainer.name);
+        // expect(BillName).toBeTruthy();
       });
     });
 
