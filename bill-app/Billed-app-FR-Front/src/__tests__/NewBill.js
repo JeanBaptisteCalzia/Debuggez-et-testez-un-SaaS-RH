@@ -13,6 +13,7 @@ import { ROUTES_PATH } from "../constants/routes";
 import { localStorageMock } from "../__mocks__/localStorage.js";
 import mockStore from "../__mocks__/store";
 import router from "../app/Router.js";
+import { ROUTES } from "../constants/routes";
 import userEvent from "@testing-library/user-event";
 import Bills from "../containers/Bills.js";
 
@@ -21,17 +22,19 @@ jest.mock("../app/store", () => mockStore);
 describe("Given I am connected as an employee", () => {
   describe("When I am on NewBill Page", () => {
     test("Verify new bill page is loaded", () => {
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ type: "Employee", email: "a@a" })
-      );
-      1;
+      Object.defineProperty(window, "localStorage", {
+        value: localStorageMock,
+      });
+
+      window.localStorage.setItem("user", JSON.stringify({ type: "Employee" }));
+
       const root = document.createElement("div");
       root.setAttribute("id", "root");
       document.body.append(root);
       router();
       window.onNavigate(ROUTES_PATH.NewBill);
 
+      // DOM construction
       const html = NewBillUI();
       document.body.innerHTML = html;
 
@@ -41,16 +44,18 @@ describe("Given I am connected as an employee", () => {
     });
 
     test("Verify bill file is png only", () => {
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ type: "Employee", email: "a@a" })
-      );
+      Object.defineProperty(window, "localStorage", {
+        value: localStorageMock,
+      });
+
+      window.localStorage.setItem("user", JSON.stringify({ type: "Employee" }));
       const root = document.createElement("div");
       root.setAttribute("id", "root");
       document.body.append(root);
       router();
       window.onNavigate(ROUTES_PATH.NewBill);
 
+      // DOM construction
       const html = NewBillUI();
       document.body.innerHTML = html;
 
@@ -87,16 +92,18 @@ describe("Given I am connected as an employee", () => {
     });
 
     test("Verify bill file is jpg only", () => {
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ type: "Employee", email: "a@a" })
-      );
+      Object.defineProperty(window, "localStorage", {
+        value: localStorageMock,
+      });
+
+      window.localStorage.setItem("user", JSON.stringify({ type: "Employee" }));
       const root = document.createElement("div");
       root.setAttribute("id", "root");
       document.body.append(root);
       router();
       window.onNavigate(ROUTES_PATH.NewBill);
 
+      // DOM construction
       const html = NewBillUI();
       document.body.innerHTML = html;
 
@@ -133,16 +140,18 @@ describe("Given I am connected as an employee", () => {
     });
 
     test("bill is not png or jpg files and display error message", async () => {
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ type: "Employee", email: "a@a" })
-      );
+      Object.defineProperty(window, "localStorage", {
+        value: localStorageMock,
+      });
+
+      window.localStorage.setItem("user", JSON.stringify({ type: "Employee" }));
       const root = document.createElement("div");
       root.setAttribute("id", "root");
       document.body.append(root);
       router();
       window.onNavigate(ROUTES_PATH.NewBill);
 
+      // DOM construction
       const html = NewBillUI();
       document.body.innerHTML = html;
 
@@ -155,10 +164,6 @@ describe("Given I am connected as an employee", () => {
       });
 
       const handleChangeFile = jest.fn(newBillContainer.handleChangeFile);
-      const uploadFileBtn = screen.getByTestId("file");
-
-      uploadFileBtn.addEventListener("change", handleChangeFile);
-
       const file = screen.getByTestId("file");
 
       // Fire DOM events
@@ -169,11 +174,8 @@ describe("Given I am connected as an employee", () => {
         },
       });
 
-      const errorMessage = jest.fn(() => file.classList.add("error-message"));
-
-      file.addEventListener("click", errorMessage);
-      // Describe a user interaction
-      userEvent.click(file);
+      // Wait for file processing when user upload a file
+      await new Promise((resolve) => setTimeout(resolve, 5));
 
       // Check if error message is displayed (not jpg or png)
       expect(handleChangeFile).toHaveBeenCalled();
@@ -187,16 +189,17 @@ describe("Given I am connected as an employee", () => {
 describe("Given I am connected as an employee", () => {
   describe("When I am on NewBill Page", () => {
     test("fetches new bills from mock API POST", async () => {
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ type: "Employee", email: "a@a" })
-      );
+      Object.defineProperty(window, "localStorage", {
+        value: localStorageMock,
+      });
+      window.localStorage.setItem("user", JSON.stringify({ type: "Employee" }));
       const root = document.createElement("div");
       root.setAttribute("id", "root");
       document.body.append(root);
       router();
       window.onNavigate(ROUTES_PATH.NewBill);
 
+      // DOM construction
       const html = NewBillUI();
       document.body.innerHTML = html;
 
@@ -207,9 +210,13 @@ describe("Given I am connected as an employee", () => {
 
     describe("user submit form", () => {
       test("call api update bills", async () => {
-        localStorage.setItem(
+        Object.defineProperty(window, "localStorage", {
+          value: localStorageMock,
+        });
+
+        window.localStorage.setItem(
           "user",
-          JSON.stringify({ type: "Employee", email: "a@a" })
+          JSON.stringify({ type: "Employee" })
         );
         const root = document.createElement("div");
         root.setAttribute("id", "root");
@@ -298,6 +305,10 @@ describe("Given I am connected as an employee", () => {
         expect(fileField.files[0].type).toBe("image/png");
         expect(handleChangeFile).toHaveBeenCalled();
 
+        const onNavigate = (pathname) => {
+          document.body.innerHTML = ROUTES({ pathname });
+        };
+
         // Init Newbill container
         const newBillContainer = new NewBill({
           document,
@@ -306,27 +317,18 @@ describe("Given I am connected as an employee", () => {
           localStorage: window.localStorage,
         });
 
-        const handleSubmit = jest.fn(newBillContainer.handleSubmit);
-        newBillForm.addEventListener("submit", handleSubmit);
+        // const handleSubmit = jest.fn(newBillContainer.handleSubmit);
+        const handleSubmitSpy = jest.spyOn(newBillContainer, "handleSubmit");
+        newBillForm.addEventListener("submit", newBillContainer.handleSubmit);
         fireEvent.submit(newBillForm);
-        expect(handleSubmit).toHaveBeenCalled();
+        expect(handleSubmitSpy).toHaveBeenCalled();
 
-        window.onNavigate(ROUTES_PATH.Bills);
-
-        // DOM construction
-        document.body.innerHTML = BillsUI({ data: billContainer });
-
+        await waitFor(() => screen.getByText("Mes notes de frais"));
         const BillsTitle = screen.getByText("Mes notes de frais");
         expect(BillsTitle).toBeTruthy();
 
-        const tbody = screen.getByTestId("tbody");
-        expect(tbody).toBeTruthy();
-
         // const BillType = screen.getByText(billContainer.type);
         // expect(BillType).toBeTruthy();
-
-        // const BillName = screen.getByText(billContainer.name);
-        // expect(BillName).toBeTruthy();
       });
     });
 
