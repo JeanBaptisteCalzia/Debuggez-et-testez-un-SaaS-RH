@@ -317,7 +317,6 @@ describe("Given I am connected as an employee", () => {
           localStorage: window.localStorage,
         });
 
-        // const handleSubmit = jest.fn(newBillContainer.handleSubmit);
         const handleSubmitSpy = jest.spyOn(newBillContainer, "handleSubmit");
         newBillForm.addEventListener("submit", newBillContainer.handleSubmit);
         fireEvent.submit(newBillForm);
@@ -326,9 +325,6 @@ describe("Given I am connected as an employee", () => {
         await waitFor(() => screen.getByText("Mes notes de frais"));
         const BillsTitle = screen.getByText("Mes notes de frais");
         expect(BillsTitle).toBeTruthy();
-
-        // const BillType = screen.getByText(billContainer.type);
-        // expect(BillType).toBeTruthy();
       });
     });
 
